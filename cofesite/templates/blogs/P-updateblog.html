@@ -1,0 +1,59 @@
+{% extends 'blogs/main.html' %}
+{% load static %}
+{% block title %} Update Blog {% endblock %}
+{% block content %}
+
+<section class="ftco-section"> 
+  {% if user.is_superuser %}
+  {% if user.id == blog.author.id %}
+  
+ <form class="row g-3" method="post">
+  
+        {% csrf_token %}
+        <div class="col-md-6">
+            <h4><label for="id_title" class="form-label text-warning" >Title</label></h4>
+            {{form.title}}
+          </div>
+          <div class="col-md-2">
+            <h4><label for="id_title_tag" class="form-label text-warning">Title tag</label></h4>
+            {{form.title_tag}}
+          </div>
+          <div class="col-md-6">
+            <h4><label for="id_header_image"class="form-label text-warning"> Add Image:</label></h4>
+                {{form.header_image}}
+          </div> 
+          <div class="col-md-2 ">
+            <h4><label class="visually-hidden text-warning" for="id_category">category</label></h4>
+            {{form.category}}
+          </div>
+          <div class="col-12">
+            <h4><label for="id_snippet" class="form-label text-warning"> Add Snippet</label></h4>
+            {{form.snippet}}
+          </div>      
+          
+          <div class="form-floating col-12">
+            <h4><label for="id_body" class="form-label text-warning">Add boby</label></h4>
+            {{form.body}}
+            {{form.media}}
+          </div>
+        
+        
+        <div class="col-12">
+            <button type="submit"  class="btn btn-warning py-3 px-4 ">
+                Update Blog
+            </button>
+          </div>
+          
+  </form>
+  {% else %}
+          <h5>You are not allowed {{user.username}}</h5>
+          <a href="{% url 'core:index' %}" class="nav-link"><button type="button" class="btn btn-white py-3 px-4">Return home</button></a>
+          {% endif %}  
+  {% else %}
+<h5>You are not allowed here</h5>
+<a href="{% url 'core:index' %}" class="nav-link"><button type="button" class="btn btn-white py-3 px-4">Return home</button></a>
+
+{% endif %}
+</section> 
+
+{% endblock content %}

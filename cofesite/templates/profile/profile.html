@@ -1,0 +1,23 @@
+{% extends 'profile/main.html' %}
+{% load static %}
+{% block content %}
+<section class="ftco-section align-items-center ">
+    <div class="container-wrap align-items-center">
+        <div class="card align-items-center" style="background-color: #c49b63;width: 18rem;">
+            <h5 class="card-title">Profile</h5>
+            <div class="card-body text-white">
+                <div class="d-md-flex">
+                    <div class="form-group ">
+                        {{user.username}}
+                    </div></div>
+                    <div class="d-md-flex">
+                    <div class="form-group">
+                        {{user.email}}
+                    </div>
+                    </div>
+            </div>
+        </div>
+</div>
+</section>
+
+{% endblock content %}

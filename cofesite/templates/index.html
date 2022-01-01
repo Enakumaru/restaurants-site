@@ -56,7 +56,13 @@
             </li>
 	          <li class="nav-item"><a href="{% url 'core:contact' %}" class="nav-link">Contact</a></li>
 	          <li class="nav-item cart"><a href="{% url 'core:cart' %}" class="nav-link"><span class="icon icon-shopping_cart"></span><span class="bag d-flex justify-content-center align-items-center"><small>{{order.get_cart_item}}</small></span></a></li>
-	        </ul>
+			  {% if user.is_authenticated %}
+			  <li class="nav-item cart"><a href="{% url 'profile:profile' %}" class="nav-link"><span class="icon icon-person"></span></a></li>
+			  <li class="nav-item "><a href="/accounts/logout/" class="nav-link">Log out</a></li> 
+			  {% else %}
+			  <li class="nav-item "><a href="/accounts/login/" class="nav-link">Log in</a></li>
+			  {% endif %}
+			</ul>
 	      </div>
 		  </div>
 	  </nav>

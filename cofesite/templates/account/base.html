@@ -45,35 +45,63 @@
       </ul>
     </div>
     {% endif %}
-<section class="ftco-section contact-section">
-  <div class="container mt-5">
-      <div class="row block-9">
-        <div class="container">
-         <div class="row slider-text justify-content-center align-items-center">
-          <div class="col-md-7 col-sm-12 text-center ftco-animate">
-            <div>
+<section class="ftco-section contact-section vh-100 gradient-custom">
+  <div class="container-fluid  py-5 h-100">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col-sm-6">
+        <div class="card bg-dark text-white" style="border-radius: 5rem;">
+          
+            <div class="card-header text-center">
+            
               <h1 class="mb-3 mt-5 bread">Menu</h1>
-              <ul>
-                  {% if user.is_authenticated %}
-                  <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'account_email' %}">Change E-mail</a></span> /   <span><a href="{% url 'account_logout' %}">Sign Out</a></span></p>                  
+              
+
+                  {% if user.is_authenticated %}                                                                            
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'account_email' %}">Change E-mail</a></span></p>
+                      </div>
+                      <div class="col">
+                        <p><span><a href="{% url 'account_logout' %}">Sign Out</a></span></p> 
+                      </div>
+                    </div>
+                  </div>
+                                 
                   {% else %}
-                  <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'account_login' %}">Sign In</a></span> <span><a href="{% url 'account_signup' %}">Sign Up</a></span></p>
+                  <div class="container">
+                    <div class="row">
+                      <div class="col">
+                        <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'account_login' %}">Sign In</a></span></p>
+                      </div>
+                      <div class="col">
+                        <p><span><a href="{% url 'account_signup' %}">Sign Up</a></span></p>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  
+                  
+            </div>
                   {% endif %}
-              </ul>
-              </div>
+              
+                  <div class="card-body  text-center">
               {% block content %}
               {% endblock %}
               {% endblock %}
               {% block extra_body %}
               {% endblock %}
-            </div>
-         </div>
+                  </div>
           </div>
+        </div>
       </div>
-  </div>
+    </div>
+             
 </section>
           
     
+
+
 
     <footer class="ftco-footer ftco-section img">
     	<div class="overlay"></div>

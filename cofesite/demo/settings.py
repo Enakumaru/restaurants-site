@@ -15,13 +15,20 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sites',
+    
     'allauth',
     'allauth.account',
     'allauth.socialaccount',
     'allauth.socialaccount.providers.google',
     'allauth.socialaccount.providers.github',
+    
     'django_summernote',
-    'core'
+    'ckeditor',
+    
+    'core',
+    'userprofile',
+    'blogs'
+    
 ]
 
 MIDDLEWARE = [
@@ -59,6 +66,7 @@ USE_I18N = True
 USE_L10N = False
 USE_TZ = True
 
+
 LOGIN_REDIRECT_URL = '/'
 LOGIN_URL = '/login/'
 LOGOUT_URL = '/logout/'
@@ -68,6 +76,10 @@ STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static_files')]
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+ACCOUNT_ADAPTER = 'userprofile.views.MyAccountAdapter'
+ACCOUNT_FORMS = {'signup': 'userprofile.forms.MyCustomSignupForm'}
+
 
 DATABASES = {
     "default": {

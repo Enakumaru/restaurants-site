@@ -13,7 +13,9 @@ urlpatterns = [
     path('product-single/<str:id>/',product_single,name='product_single'),
     path('services/',services,name='services'),
     path('shop/',shop,name='shop'),
-    path('formms/',formms,name='formms'),
+    path('formms/<str:cats>/',formms,name='formms'),
     path('updatecart/',updatecart,name='updatecart'),
-    path('home/', intiprofile, name='home'),
+    
+    path('categoryview/<str:cats>/', categoryview, name='categoryview'),
+    
 ]

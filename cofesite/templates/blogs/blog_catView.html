@@ -1,0 +1,25 @@
+{% extends 'blogs/main.html' %}
+{% block content %}
+{% load static %}
+<section class="ftco-section">
+<div class="row">
+{% for i in products %}
+<div class="col-md-4 d-flex ftco-animate">
+    <div class="blog-entry align-self-stretch">
+    <a href="/blog_single/{{i.id}}/" class="block-20" style="background-image: url('{{i.imageURL}}');">
+    </a>
+    <div class="text py-4 d-block">
+        <div class="meta">
+        <div><a href="#">{{ i.post_date }}</a></div>
+        <div><a href="#">{{ i.author }}</a></div>
+        <div><a href="#" class="meta-chat"><span class="icon-chat"></span> 3</a></div>
+      </div>
+      <h3 class="heading mt-2"><a href="/blog_single/{{i.id}}/">{{ i.title }}</a></h3>
+      <p>{{ i.snippet }}</p>
+    </div>
+  </div>
+</div>
+{% endfor %}
+</div>
+</section>
+{% endblock %}

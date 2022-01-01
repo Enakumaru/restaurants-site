@@ -1,3 +1,4 @@
+from django.http.response import Http404, HttpResponseBadRequest, HttpResponseNotFound
 from django.shortcuts import render,redirect
 import requests
 from .models import *
@@ -6,7 +7,9 @@ from django.http import JsonResponse
 import datetime
 import json
 from django.views.generic import TemplateView
-
+from django.views.generic import CreateView
+from django.shortcuts import get_object_or_404
+from django.core.exceptions import BadRequest, PermissionDenied
 
 
 def about(request):
@@ -75,7 +78,7 @@ def checkout(request):
         Blog=blog.objects.all().order_by('post_date')[:2]
         form = Shipping(request.POST or None, request.FILES or None)
         data = {}
-        if request.is_ajax():
+        if request.method == 'POST':
             if form.is_valid():
                 form.save()
                 data['name'] = form.cleaned_data.get('name')
@@ -114,7 +117,7 @@ def Contact(request):
         Blog=blog.objects.all().order_by('post_date')[:2]
         form = Form(request.POST or None, request.FILES or None)
         data = {}
-        if request.is_ajax():
+        if request.method == 'POST':
             if form.is_valid():
                 form.save()
                 data['name'] = form.cleaned_data.get('name')
@@ -130,7 +133,7 @@ def Contact(request):
         Blog=blog.objects.all().order_by('post_date')[:2]
         form = Form(request.POST or None, request.FILES or None)
         data = {}
-        if request.is_ajax():
+        if request.method == 'POST':
             if form.is_valid():
                 form.save()
                 data['name'] = form.cleaned_data.get('name')
@@ -274,6 +277,7 @@ def shop(request):
     return render(request,"shop.html",context)
 def index(request):    
     if request.user.is_authenticated:   
+        print(request.user.first_name,request.user.last_name)
         customer=request.user.customer
         order,created=Order.objects.get_or_create(customer=customer, complete=False)
         Blog=blog.objects.all().order_by('post_date')[:3]
@@ -353,93 +357,52 @@ def main(request):
     return render(request,'main.html',context)
 
 def updatecart(request):
-    if request.is_ajax():
-        if request.method == 'POST':
-            productID = request.POST['productID']
-            categorieID=request.POST['categorieID']
-            Action=request.POST['Action']
-            quntity=request.POST['quntity']    
-           # print(productID,categorieID,Action)          
-            customer=request.user.customer
-            product=Item.objects.get(id=productID,category_id=categorieID)
-            order,created=Order.objects.get_or_create(customer=customer, complete=False)
-            orderItem,created=OrderItem.objects.get_or_create(order=order, product=product,category_id=categorieID)
-            
-            if Action=='add':
-                orderItem.quantity = (orderItem.quantity+1)
-            elif Action=='remove':
-                orderItem.delete()
-            #print(orderItem.quantity)
-            if orderItem.quantity <= 0 :
-                orderItem.delete()
-            orderItem.save()
+    
+    if request.method == 'POST':
+        productID = request.POST['productID']
+        categorieID=request.POST['categorieID']
+        Action=request.POST['Action']
+        quntity=request.POST['quntity']    
+        # print(productID,categorieID,Action)          
+        customer=request.user.customer
+        product=Item.objects.get(id=productID,category_id=categorieID)
+        order,created=Order.objects.get_or_create(customer=customer, complete=False)
+        orderItem,created=OrderItem.objects.get_or_create(order=order, product=product,category_id=categorieID)
+        
+        if Action=='add':
+            orderItem.quantity = (orderItem.quantity+1)
+        elif Action=='remove':
+            orderItem.delete()
+        #print(orderItem.quantity)
+        if orderItem.quantity <= 0 :
+            orderItem.delete()
+        orderItem.save()
     return JsonResponse('hello',safe=False)
 
-def formms(request):
-    form = appointmss(request.POST or None, request.FILES or None)
-    data = {}
-    if request.method == 'POST':
-        if form.is_valid():
-            form.save()
+def formms(request,cats):
+    product=Category.objects.filter( name=cats).values_list('id', flat=True)
+    if len(product)==0:
+        a=1
+        print('this is not good')
+    else:
+        a=product[0]
+    print(a)
     context = {
-        'form': form,
+        'product':product
     }
     return render(request,"test.html",context)
 
-
-
-def intiprofile(request):
-    form = costomersdedatil(request.POST or None, request.FILES or None)
-    data = {}
-    if request.is_ajax():
-            if form.is_valid():
-                custo=form.save(commit=False)
-                custo.user=request.user
-                custo.save()
-                data['name'] = form.cleaned_data.get('name')
-                data['status'] = 'ok'
-                name=form.cleaned_data.get('name')
-                email=form.cleaned_data.get('email')
-                return JsonResponse(data)
-                
-    context = {
-        'form': form,
-    }  
-    return render(request,"home.html",context)
-
-
-#<a class="dropdown-item" href="{% url 'core:product-single/<str:id>/' %}">Shop</a>
+def categoryview(request,cats):
+    cattis=Category.objects.filter( name=cats).values_list('id', flat=True)
+    if len(cattis)==0:
+        return HttpResponseNotFound("does not exist")  
+    else:
+        product=Item.objects.filter(category=cattis[0])
+        context={
+            'products':product,
+        }
+        return render (request,'categoryview.html',context)
 
 
 
-#appointment
 
-
-#form = appointmss(request.POST or None, request.FILES or None)
-    #data = {}
-    #if request.method=="GET":
-        #if form.is_valid():
-           # firstname= form.cleaned_data.get('firstname')
-           # data["firstname"]=firstname
-           # secondname= form.cleaned_data.get('secondname')
-          #  data["secondname"]=secondname
-           # date= form.cleaned_data.get('date')
-           # data["date"]=date
-           # print(data)
-       # else:
-        #    print('form is not valid')
-    #if request.method=="POST":
-        #'firstname', 'secondname','date', 'time','phone','message'
-        #firstname = request.POST['firstname']
-        #secondname=request.POST['secondname']
-        #date=request.POST['date']
-        #print(firstname,secondname,date)
-        #return JsonResponse(data)
-        #if form.is_valid():
-         #   form.save()
-          #  data['name'] = form.cleaned_data.get('name')
-           # data['status'] = 'ok'
-            #return JsonResponse(data)
-            #<!-- #{% for product in item|slice:":6" %}
-	#{{product.get_products(coffee)}}
-	#{% endfor%} -->

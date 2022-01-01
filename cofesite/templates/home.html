@@ -45,164 +45,174 @@
 	      </div>
 		  </div>
 	  </nav>
-      
-<section class="ftco-section contact-section">
-    <div class="container mt-5">
-        <div class="row block-9">
-          <div class="container">
-                <h1>coustomer page</h1>
-                {% if user.is_authenticated %}
-                <h3>Welcome {{ user.username }} !!!</h3>
-                <h3>pls provide additonal information</h3>
-                <div class="col-md-6 ftco-animate">
-                    <div id="alert-box"></div>
-                        <form  id="contact-form" action="#" class="contact-form">
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="name">Name</label>
-                                    {{form.name}}
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
-                                    <label for="email">email</label>
-                                    {{form.email}}
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <input type="submit" value="Send Message" class="btn btn-primary py-3 px-5">
-                            </div>
-                {% else %}
-                <a href="{% provider_login_url 'github' %}">Sign Up</a>
-                {% endif %}        
-                        </form>
-                </div>
-          </div>
-        </div>
-    </div>
-</section>       
-                
-       
-<script type="text/javascript">
-    const alertBox = document.getElementById('alert-box')
-    const form = document.getElementById('contact-form')
-    
-    const name = document.getElementById('name')
-    const email = document.getElementById('email')
-    
-    
-    const csrf = document.getElementsByName('csrfmiddlewaretoken')
-    console.log(csrf)
-    
-    const url = ""
-    
-    const handleAlerts = (type, text) =>{
-        alertBox.innerHTML = `<div class="alert alert-${type}" role="alert">
-                                ${text}
-                            </div>`
-    }
-    
-    form.addEventListener('submit', e=>{
-        e.preventDefault()
-    
-        const fd = new FormData()
-        fd.append('csrfmiddlewaretoken', csrf[0].value)
-        fd.append('name', name.value)
-        fd.append('email', email.value)
-    
-        $.ajax({
-            type: 'POST',
-            url: url,
-            enctype: 'form-data',
-            data: fd,
-            success: function(response){
-                console.log(response)
-                console.log(fd)
-                const sText = `successfully registered as ${name.value}`
-                handleAlerts('success', sText)
-               
-            },
-            error: function(error){
-                console.log(error)
-                handleAlerts('danger', 'ups..something went wrong')
-            },
-            cache: false,
-            contentType: false,
-            processData: false,
-        })
-    })
-    
-    console.log(form)
-    
-      </script>
+    <section class="ftco-section">
+    <canvas id='canvas1'></canvas>
+  </section>
 
+
+ <script>
+  function Particle() {
+    this._x = 0;
+    this._y = 0;
+    this._t = 0;
+    this._vx = 0;
+    this._vy = 0;
+    this._h = 0;
+  }
+  
+  var canvas;
+  var canvasCtx;
+  var w;
+  var h;
+  var r;
+  var imgData;
+  
+  function resize() {
+    canvas = document.getElementById('canvas1');
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    w = canvas.width;
+    h = canvas.height;
+    r = parseInt((w + h)/10);
+    canvasCtx = canvas.getContext('2d');
+    imgData = canvasCtx.createImageData(w, h);
+  
+    for (var i = 0; i < imgData.data.length; i += 4) {
+    imgData.data[i + 0] = 0;
+    imgData.data[i + 1] = 0;
+    imgData.data[i + 2] = 0;
+    imgData.data[i + 3] = 255;
+    }
+  
+    clear(canvasCtx);
+    
+  }
+  
+  
+  window.onresize = resize;
+  resize();
+  
+  var particleArray = [];
+  
+  
+  function createParticle() {
+    var count = 100;
+    var speed = Math.sqrt(Math.random()) * 10;
+    var px = Math.random() * w;
+    var py = Math.random() * h / 3;
+    var t;
+    var hue = parseInt(Math.random() * 360);
+  
+    for (var i = 0; i < count; i += 1) {
+      var p = new Particle();
+      t = Math.random() * 2 * Math.PI;
+      p._x = px;
+      p._y = py;
+      p._vx = Math.cos(t) * speed;
+      p._vy = Math.sin(t) * speed;
+      p._h = hue;
+      particleArray.push(p);
+    }
+  }
+  
+  var rM = 0.8;
+  var gM = 0;
+  var bM = 0;
+  
+  function colorTransform() {
+    if (rM > 0.9) {
+      rM = 0.75;
+    }
+    rM += 0.01;
+  }
+  
+  function clear(canvas) {
+    canvas.beginPath();
+    canvas.fillStyle = 'RGBA(0,0,0,1)';
+    canvas.fillRect(0,0,w,h);
+  }
+  
+  function fade(canvas) {
+    canvas.beginPath();
+    canvas.fillStyle = 'RGBA(0,0,0,0.2)';
+    canvas.fillRect(0,0,w,h);
+  }
+  
+  
+  function draw() {
+    createParticle();
+    colorTransform();
+    // fade(canvas);
+  
+    var len = particleArray.length;
+    var p;
+    var lum;
+    var index;
+    var tx;
+    var ty;
+  
+    imgData = canvasCtx.getImageData(0, 0, w, h);
+  
+    for (var i = len - 1; i > -1; i -= 1) {
+      p = particleArray[i];
+      
+      p._vy += 0.2;
+      p._vx *= 0.9;
+      p._vy *= 0.9;
+      p._x += p._vx;
+      p._y += p._vy;
+      tx = Math.floor(p._x);
+      ty = Math.floor(p._y);
+  
+      p._t += 1.5;
+  
+      
+      if (Math.abs(p._vy) < 0.01 || Math.abs(p._vx) < 0.01 || p._y > h || p._x < 0 || p._x > w) {
+        particleArray.splice(i, 1);
+      }
+  
+      index = tx + ty * w;
+      index *= 4;
+      imgData.data[index + 0] = 255;
+      imgData.data[index + 1] = 255;
+      imgData.data[index + 2] = 255;
+    }
+  
+    for (var i = 0; i < imgData.data.length; i += 4) {
+      imgData.data[i + 0] *= rM;
+      imgData.data[i + 1] *= gM;
+      imgData.data[i + 2] *= bM;
+    }
+  
+    canvasCtx.putImageData(imgData, 0, 0);
+  
+    //glow
+    len = particleArray.length;
+  
+    for (var i = len - 1; i > -1; i -= 1) {
+      if (Math.random() < 0.03) {
+        p = particleArray[i];
+        canvasCtx.beginPath();
+        canvasCtx.fillStyle = 'RGBA(255,255,255,0.1)';
+        canvasCtx.arc(p._x, p._y, 10, 0, 2 * Math.PI);
+        canvasCtx.fill();
+      }
+      
+    }
+  
+  
+    
+    window.requestAnimationFrame(draw);
+  }
+  
+  
+  
+  draw();
+ </script>
 
 <footer class="ftco-footer ftco-section img">
     <div class="overlay"></div>
   <div class="container">
-    <div class="row mb-5">
-      <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
-        <div class="ftco-footer-widget mb-4">
-          <h2 class="ftco-heading-2">About Us</h2>
-          <p>Far far away, behind the word mountains, far from the countries Vokalia and Consonantia, there live the blind texts.</p>
-          <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-5">
-            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-4 col-md-6 mb-5 mb-md-5">
-        <div class="ftco-footer-widget mb-4">
-          <h2 class="ftco-heading-2">Recent Blog</h2>
-          <div class="block-21 mb-4 d-flex">
-            <a class="blog-img mr-4" style="background-image: url(/static/images/image_1.jpg);"></a>
-            <div class="text">
-              <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
-              <div class="meta">
-                <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
-                <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-              </div>
-            </div>
-          </div>
-          <div class="block-21 mb-4 d-flex">
-            <a class="blog-img mr-4" style="background-image: url(/static/images/image_2.jpg);"></a>
-            <div class="text">
-              <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control about</a></h3>
-              <div class="meta">
-                <div><a href="#"><span class="icon-calendar"></span> Sept 15, 2018</a></div>
-                <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2 col-md-6 mb-5 mb-md-5">
-         <div class="ftco-footer-widget mb-4 ml-md-4">
-          <h2 class="ftco-heading-2">Services</h2>
-          <ul class="list-unstyled">
-            <li><a href="#" class="py-2 d-block">Cooked</a></li>
-            <li><a href="#" class="py-2 d-block">Deliver</a></li>
-            <li><a href="#" class="py-2 d-block">Quality Foods</a></li>
-            <li><a href="#" class="py-2 d-block">Mixed</a></li>
-          </ul>
-        </div>
-      </div>
-      <div class="col-lg-3 col-md-6 mb-5 mb-md-5">
-        <div class="ftco-footer-widget mb-4">
-            <h2 class="ftco-heading-2">Have a Questions?</h2>
-            <div class="block-23 mb-3">
-              <ul>
-                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St. Mountain View, San Francisco, California, USA</span></li>
-                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2 392 3929 210</span></a></li>
-                <li><a href="#"><span class="icon icon-envelope"></span><span class="text">info@yourdomain.com</span></a></li>
-              </ul>
-            </div>
-        </div>
-      </div>
-    </div>
     <div class="row">
       <div class="col-md-12 text-center">
 

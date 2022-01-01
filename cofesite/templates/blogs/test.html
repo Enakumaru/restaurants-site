@@ -1,0 +1,37 @@
+{% load static %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light" id="ftco-navbar">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'core:index' %}">Coffee<small>Blend</small></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav" aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="oi oi-menu"></span> Menu
+        </button>
+        <div class="collapse navbar-collapse" id="ftco-nav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item active"><a href="{% url 'blogs:P-blog' %}" class="nav-link"> Add blog</a></li>
+                <li class="nav-item active"><a href="{% url 'blogs:testt' %}" class="nav-link"> blog area</a></li>
+                {% if user.is_authenticated %}
+                      <li class="nav-item cart"><a href="{% url 'profile:profile' %}" class="nav-link"><span class="icon icon-person"></span></a></li>
+                      <li class="nav-item "><a href="/accounts/logout/" class="nav-link">Log out</a></li> 
+                        {% else %}
+                      <li class="nav-item "><a href="/accounts/login/" class="nav-link">Log in</a></li>
+                      {% endif %}
+
+            </ul>
+        </div>
+    </div>
+</nav>
+
+{{object_list}}
+{% for hello in object_list %}
+<p>{{hello}}</p>
+<a href="{% url 'blog:blogcategory' hello.category  %}">{{hello.category}}</a>
+<a href="/blog_single/{{hello.id}}/">View</a>
+{% if user.id == hello.author.id %}
+<a href="/blogs/P-blog/edit/{{hello.id}}/">edit</a>
+<a href="/blogs/P-blog/delete/{{hello.id}}/">delete</a>
+{% endif %}
+{% endfor %}
+
+
+{% endblock content %}

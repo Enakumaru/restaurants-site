@@ -7,6 +7,8 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/', include('allauth.urls')),
     path('' ,include('core.urls',namespace='core')),
+    path('profile/' ,include('userprofile.urls',namespace='profile')),
+    path('blogs/' ,include('blogs.urls',namespace='blogs')),
     path('summernote/', include('django_summernote.urls')),
     
     #path('login', django.contrib.auth.views.LoginView.as_view(template_name='account/login.html'),name='login'),

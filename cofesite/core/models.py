@@ -2,6 +2,9 @@ from django.conf import settings
 from django.db import models
 from django.db.models.deletion import CASCADE
 from django.contrib.auth.models import User
+from django.urls import reverse
+from django.urls.base import reverse_lazy
+from ckeditor.fields import RichTextField
 # Create your models here.
 
 
@@ -11,11 +14,11 @@ from django.contrib.auth.models import User
 class Customer(models.Model):
     id = models.IntegerField(primary_key=True)
     user=models.OneToOneField(User,null=True,blank=True,on_delete=models.CASCADE)
-    name=models.CharField(max_length=200,null=True)
+    name=models.CharField(max_length=200,null=True,blank=True)
     email=models.EmailField(max_length=200)
     
-    def __str__(self) -> str:
-        return self.name
+    #def __str__(self) -> str:
+        #return self.name
     
 class Category(models.Model):
     id = models.IntegerField(primary_key=True)
@@ -117,13 +120,17 @@ class blog(models.Model):
     header_image=models.ImageField(null=True,blank=True)
     title_tag=models.CharField(max_length=150)
     author=models.ForeignKey(User, on_delete=models.CASCADE)
-    body=models.TextField()
+    body=RichTextField(null=True,blank=True)
     post_date=models.DateField(auto_now=True)
     category=models.ForeignKey(Category,on_delete=models.CASCADE)
     snippet=models.CharField(max_length=150)
     
     def __str__(self) -> str:
-        return self.title
+        return self.title + ' | ' + str(self.author)
+    
+    def get_absolute_url(self):
+        return reverse('blogs:testt')
+    
     
     @property
     def imageURL(self):
