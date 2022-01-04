@@ -20,6 +20,11 @@ class shipping(SummernoteModelAdmin , admin.ModelAdmin):  # instead of ModelAdmi
     list_display = ['firstname', 'email','Phone','State', 'Country','StreetAddress',]    
 
 
+class Commenting(SummernoteModelAdmin , admin.ModelAdmin):  # instead of ModelAdmin
+    summernote_fields = '__all__'
+    list_display = ['post' ,'author', 'date_added']
+
 admin.site.register(shippingdetails,shipping)    
 admin.site.register(contact,contactAdmin)
 admin.site.register(OrderItem,orderitem)
+admin.site.register(Comments,Commenting)

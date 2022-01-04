@@ -35,11 +35,20 @@ def about(request):
     return render(request,"home.html",context)
 def blog_single(request,id):
     if request.user.is_authenticated:
+        form=Addcomments(request.POST or None, request.FILES or None)
         customer=request.user.customer
         order,created=Order.objects.get_or_create(customer=customer, complete=False)
         underBlog=blog.objects.all().order_by('post_date')[:2]
         Blogs = blog.objects.get(id = id)
-        context = {'order':order,'blog':Blogs,'underblog':underBlog}
+        comments=Comments.objects.filter(post_id=id)
+        if request.method == 'POST':
+            if form.is_valid():
+                load=form.save(commit=False)
+                load.author=request.user.customer
+                load.post=Blogs 
+                load.save()
+            print(form.errors)
+        context = {'order':order,'Blog':Blogs,'underblog':underBlog,'form':form,'comments':comments,}
     else:
         underBlog=blog.objects.all().order_by('post_date')[:2]
         Blogs = blog.objects.get(id = id)

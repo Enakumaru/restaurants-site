@@ -1,0 +1,365 @@
+{% extends 'main.html' %}
+{% load static %}
+{% block content %}
+{% csrf_token %}
+    <section class="home-slider owl-carousel">
+
+      <div class="slider-item" style="background-image: url(/static/images/bg_3.jpg);" data-stellar-background-ratio="0.5">
+      	<div class="overlay"></div>
+        <div class="container">
+          <div class="row slider-text justify-content-center align-items-center">
+
+            <div class="col-md-7 col-sm-12 text-center ftco-animate">
+            	<h1 class="mb-3 mt-5 bread">Checkout</h1>
+	            <p class="breadcrumbs"><span class="mr-2"><a href="{% url 'core:index' %}">Home</a></span> <span>Checout</span></p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="ftco-section">
+		<div id="alert-box"></div>
+      <div id="p-form" class="container ">
+        <div class="row">
+          <div class="col-xl-8 ftco-animate">
+						<form action="#" class="billing-form ftco-bg-dark p-3 p-md-5">
+							<h3 class="mb-4 billing-heading">Billing Details</h3>
+	          	<div class="row align-items-end">
+	          		<div class="col-md-6">
+	                <div class="form-group">
+						
+	                	<label for="firstname">Firt Name</label>
+						{{form.firstname}}
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+						
+	                	<label for="lastname">Last Name</label>
+						{{form.secondname}}
+	                </div>
+                </div>
+				<div class="col-md-6">
+	                <div class="form-group">
+						
+	                	<label for="firstname">State</label>
+						{{form.State}}
+	                </div>
+	              </div>
+				  <div class="col-md-6">
+	                <div class="form-group">
+						
+	                	<label for="firstname">Country</label>
+						{{form.Country}}
+	                </div>
+	              </div>
+                
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+						
+						
+		            	<div class="form-group">
+							
+	                	<label for="streetaddress">Street Address</label>
+						{{form.StreetAddress}}
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+							
+							{{form.StreetAddress2}}
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+							
+	                	<label for="towncity">Town / City</label>
+						{{form.Town_City}}
+	                </div>
+		            </div>
+		            <div class="col-md-6">
+		            	<div class="form-group">
+							
+		            		<label for="postcodezip">Postcode / ZIP *</label>
+							{{form.Postcode_ZIP}}
+	                </div>
+		            </div>
+		            <div class="w-100"></div>
+		            <div class="col-md-6">
+	                <div class="form-group">
+						
+						
+	                	<label for="phone">Phone</label>
+					  {{form.Phone}}
+	                </div>
+	              </div>
+	              <div class="col-md-6">
+	                <div class="form-group">
+						
+	                	<label for="emailaddress">Email Address</label>
+						{{form.email}}
+	                </div>
+                </div>
+                <div class="w-100"></div>
+                <div class="col-md-12">
+                	<div class="form-group mt-4">
+										<div class="radio">
+										  <label class="mr-3"><input type="radio" name="optradio"> Create an Account? </label>
+										  <label><input type="radio" name="optradio"> Ship to different address</label>
+										</div>
+									</div>
+                </div>
+	            </div>
+	          
+
+
+
+	          <div class="row mt-5 pt-3 d-flex">
+	          	<div class="col-md-6 d-flex">
+	          		<div class="cart-detail cart-total ftco-bg-dark p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Cart Total</h3>
+	          			<p class="d-flex">
+		    						<span>Subtotal</span>
+		    						<span>${{order.get_cart_total |floatformat:2 }}</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Delivery</span>
+		    						<span>$0.00</span>
+		    					</p>
+		    					<p class="d-flex">
+		    						<span>Discount</span>
+		    						<span>$3.00</span>
+		    					</p>
+		    					<hr>
+		    					<p class="d-flex total-price" >
+		    						<span>Total</span>
+		    						<span>${{order.get_cart_total |floatformat:2 }}</span>
+		    					</p>
+								</div>
+	          	</div>
+	          	<div class="col-md-6">
+	          		<div class="cart-detail ftco-bg-dark p-3 p-md-4">
+	          			<h3 class="billing-heading mb-4">Payment Method</h3>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Direct Bank Tranfer</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Check Payment</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="radio">
+											   <label><input type="radio" name="optradio" class="mr-2"> Paypal</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<div class="col-md-12">
+											<div class="checkbox">
+											   <label><input type="checkbox" value="" class="mr-2"> I have read and accept the terms and conditions</label>
+											</div>
+										</div>
+									</div>
+									<div class="form-group">
+										<input type="submit" value="Place an Order" class="btn btn-primary py-3 px-5">
+									  </div>
+								</div>
+	          	</div>
+	          </div>
+          </div> <!-- .col-md-8 -->
+		</form><!-- END -->
+
+
+
+          <div class="col-xl-4 sidebar ftco-animate">
+            <div class="sidebar-box">
+              <form action="#" class="search-form">
+                <div class="form-group">
+                	<div class="icon">
+	                  <span class="icon-search"></span>
+                  </div>
+                  <input type="text" class="form-control" placeholder="Search...">
+                </div>
+              </form>
+            </div>
+            <div class="sidebar-box ftco-animate">
+              <div class="categories">
+				
+                <h3>Categories</h3>
+                <li><a href="#">coffee <span>({{ coffee|length }})</span></a></li>
+                <li><a href="#">maindish <span>({{ maindish|length }})</span></a></li>
+                <li><a href="#">dessert <span>({{ dessert|length }})</span></a></li>
+                <li><a href="#">drinks <span>({{ drinks|length }})</span></a></li>
+                <li><a href="#">Starter <span>({{ Starter|length }})</span></a></li>
+              </div>
+            </div>
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Recent Blog</h3>
+			  {% for i in blog %}
+              <div class="block-21 mb-4 d-flex">
+                <a class="blog-img mr-4" href="/blog_single/{{i.id}}/"  style="background-image: url('{{i.imageURL}}');"></a>
+                <div class="text">
+                  <h3 class="heading"><a href="/blog_single/{{i.id}}/">{{ i.title }}</a></h3>
+                  <div class="meta">
+                    <div><a href="#"><span class="icon-calendar"></span> {{ i.post_date }}</a></div>
+                    <div><a href="#"><span class="icon-person"></span> {{ i.author }}</a></div>
+                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+            </div>
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Tag Cloud</h3>
+              <div class="tagcloud">
+                <a href="#" class="tag-cloud-link">dish</a>
+                <a href="#" class="tag-cloud-link">menu</a>
+                <a href="#" class="tag-cloud-link">food</a>
+                <a href="#" class="tag-cloud-link">sweet</a>
+                <a href="#" class="tag-cloud-link">tasty</a>
+                <a href="#" class="tag-cloud-link">delicious</a>
+                <a href="#" class="tag-cloud-link">desserts</a>
+                <a href="#" class="tag-cloud-link">drinks</a>
+              </div>
+            </div>
+
+            <div class="sidebar-box ftco-animate">
+              <h3>Paragraph</h3>
+              <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ducimus itaque, autem necessitatibus voluptate quod mollitia delectus aut, sunt placeat nam vero culpa sapiente consectetur similique, inventore eos fugit cupiditate numquam!</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section> <!-- .section -->
+
+	<script>
+		const alertBox = document.getElementById('alert-box')
+		const form = document.getElementById('p-form')
+	  
+		const firstname = document.getElementById('firstname')
+		const secondname = document.getElementById('secondname')
+		const State = document.getElementById('State')
+		const Country = document.getElementById('Country')
+		const StreetAddress = document.getElementById('StreetAddress')
+		const StreetAddress2 = document.getElementById('StreetAddress2')
+		const Town_City = document.getElementById('Town_City')
+		const Postcode_ZIP = document.getElementById('Postcode_ZIP')
+		const Phone = document.getElementById('Phone')
+		const email = document.getElementById('email')
+		var total = '{{order.get_cart_total |floatformat:2 }}'
+	  
+	  const csrf = document.getElementsByName('csrfmiddlewaretoken')
+	  console.log(csrf)
+	  
+	  const url = ""
+	  
+	  const handleAlerts = (type, text) =>{
+		  alertBox.innerHTML = `<div class="alert alert-${type}" role="alert">
+								  ${text}
+							  </div>`
+	  }
+	  
+	  form.addEventListener('submit', e=>{
+		  e.preventDefault()
+	  
+		  const fd = new FormData()
+			fd.append('csrfmiddlewaretoken', csrf[0].value)
+			fd.append('firstname', firstname.value)
+			fd.append('secondname', secondname.value)
+			fd.append('State', State.value)
+			fd.append('Country', Country.value)
+			fd.append('StreetAddress', StreetAddress.value)
+			fd.append('StreetAddress2', StreetAddress2.value)
+			fd.append('Town_City', Town_City.value)
+			fd.append('Phone', Phone.value)
+			fd.append('Postcode_ZIP', Postcode_ZIP.value)
+			fd.append('email', email.value)
+			fd.append('total',total)
+		  $.ajax({
+			  type: 'POST',
+			  url: url,
+			  enctype: 'form-data',
+			  data: fd,
+			  success: function(response){
+				  console.log(response)
+				  console.log(fd)
+				  const sText = `successfully Placed an  ${firstname.value}`
+				  handleAlerts('success', sText)
+				  setTimeout(()=>{
+					  alertBox.innerHTML = ""
+					  firstname.value = ""
+					  secondname.value= ""
+					  State.value = ""
+					  Country.value = ""
+					  StreetAddress.value = ""
+					  StreetAddress2.value = ""
+					  Town_City.value = ""
+					  Postcode_ZIP.value = ""
+					  Phone.value = ""
+					  email.value = ""
+				  }, 3000)
+			  },
+			  error: function(error){
+				  console.log(error)
+				  handleAlerts('danger', 'ups..something went wrong')
+			  },
+			  cache: false,
+			  contentType: false,
+			  processData: false,
+		  })
+	  })
+	  console.log(form)
+	</script>
+    
+<script type="text/javascript">
+		$(document).ready(function(){
+
+		var quantitiy=0;
+		   $('.quantity-right-plus').click(function(e){
+		        
+		        // Stop acting like a button
+		        e.preventDefault();
+		        // Get the field name
+		        var quantity = parseInt($('#quantity').val());
+		        
+		        // If is not undefined
+		            
+		            $('#quantity').val(quantity + 1);
+
+		          
+		            // Increment
+		        
+		    });
+
+		     $('.quantity-left-minus').click(function(e){
+		        // Stop acting like a button
+		        e.preventDefault();
+		        // Get the field name
+		        var quantity = parseInt($('#quantity').val());
+		        
+		        // If is not undefined
+		      
+		            // Increment
+		            if(quantity>0){
+		            $('#quantity').val(quantity - 1);
+		            }
+		    });
+		    
+		});
+	</script>
+{% endblock %}
+	

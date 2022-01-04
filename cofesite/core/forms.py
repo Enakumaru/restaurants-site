@@ -1,6 +1,6 @@
 from django import forms
-from django.forms import ModelForm
-from .models import contact,shippingdetails,Appointment,Customer
+from django.forms import ModelForm, widgets
+from .models import Comments, contact,shippingdetails,Appointment,Customer
 
 
 class Form(forms.ModelForm):
@@ -45,7 +45,13 @@ class costomersdedatil(forms.ModelForm):
     
     
         
-
+class Addcomments(forms.ModelForm):
+    class Meta:
+        model=Comments
+        fields=['body']
+        widgets={
+            'body': forms.Textarea(attrs={'placeholder':'Leave a comment','class':'form-control',}),
+        }
         
 
 class Shipping(forms.ModelForm):

@@ -1,0 +1,55 @@
+{% extends 'profile/main.html' %}
+{% load static %}
+{% block content %}
+<section class="ftco-section contact-section">
+    <form method="post" enctype="multipart/form-data">
+
+        {% csrf_token %}
+        
+      <!-- <div class="mb-3 row">
+        <h4><label for="password" class="col-sm-2 col-form-label">password</label></h4>
+        <div class="col-sm-10">
+            {{form.password}}
+        </div>
+      </div> -->
+      <div class="mb-3 row">
+        <h4><label for="first_name" class="col-sm-2 col-form-label">First name</label></h4>
+        <div class="col-sm-10">
+            {{form2.first_name}}
+            
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <h4><label for="last_name" class="col-sm-2 col-form-label">Last name</label></h4>
+        <div class="col-sm-10">
+            {{form2.last_name}}
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <h4><label for="username" class="col-sm-2 col-form-label">Username</label></h4>
+        <div class="col-sm-10">
+            {{form2.username}}
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <h4><label for="last_login" class="col-sm-2 col-form-label">Email</label></h4>
+        <div class="col-sm-10">
+            {{form2.email}}
+        </div>
+      </div>
+      <div class="mb-3 row">
+        <h4><label for="last_login" class="col-sm-2 col-form-label">photo</label></h4>
+        <div class="col-sm-10">
+            {{form.profile_image}}
+        </div>
+      </div>
+      
+      <div class="col-12">
+        <button type="submit"  class="btn btn-warning py-3 px-4 ">
+            Update
+        </button>
+      </div>
+      
+    </form> 
+</section>
+{% endblock %}

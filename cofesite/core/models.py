@@ -16,7 +16,15 @@ class Customer(models.Model):
     user=models.OneToOneField(User,null=True,blank=True,on_delete=models.CASCADE)
     name=models.CharField(max_length=200,null=True,blank=True)
     email=models.EmailField(max_length=200)
-    
+    profile_image=models.ImageField(null=True,blank=True)
+    bio=models.TextField(null=True,blank=True)
+    @property
+    def imageURL(self):
+        try:
+            url=self.profile_image.url
+        except:
+            url=' '
+        return url
     #def __str__(self) -> str:
         #return self.name
     
@@ -114,7 +122,6 @@ class Appointment(models.Model):
     time=models.TimeField(auto_now=False, auto_now_add=False)
     phone=models.IntegerField()
     
-
 class blog(models.Model):
     title=models.CharField(max_length=256)
     header_image=models.ImageField(null=True,blank=True)
@@ -139,7 +146,13 @@ class blog(models.Model):
         except:
             url=' '
         return url
-        
+
+class Comments(models.Model):
+    post=models.ForeignKey(blog, on_delete=models.CASCADE)
+    author=models.ForeignKey(Customer, on_delete=models.CASCADE)
+    body=models.TextField()
+    date_added=models.DateTimeField(auto_now_add=True)
+    
 class shippingdetails(models.Model):
     firstname=models.CharField(max_length=50)
     secondname=models.CharField(max_length=50)

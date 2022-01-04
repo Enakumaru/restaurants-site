@@ -1,0 +1,26 @@
+{% extends 'blogs/main.html' %}
+{% load static %}
+{% block title %} Update Blog {% endblock %}
+{% block content %}
+<section class="ftco-section"> 
+{% if user.is_superuser %} 
+{% if user.id == blog.author.id %}
+ <form method="post">
+    {% csrf_token %}
+
+    
+<button type="submit"  class="btn btn-white py-3 px-4">Dlete Blog</button>
+</form>
+{% else %}
+          <h5>You are not allowed {{user.username}}</h5>
+          <a href="{% url 'core:index' %}" class="nav-link"><button type="button" class="btn btn-white py-3 px-4">Return home</button></a>
+          {% endif %}  
+{% else %}
+
+<h5>You are not allowed here</h5>
+<a href="{% url 'core:index' %}" class="nav-link"><button type="button" class="btn btn-white py-3 px-4">Return home</button></a>
+
+{% endif %}
+</section> 
+
+{% endblock content %}

@@ -6,7 +6,7 @@ from django.views.generic.base import TemplateView
 from django.views.generic import ListView 
 from core.models import *
 from django.views.generic import CreateView , UpdateView , DeleteView
-from .forms import blogForm,EditblogForm
+from .forms import  blogForm,EditblogForm
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.http.response import Http404, HttpResponseBadRequest, HttpResponseNotFound
 # Create your views here.
@@ -49,11 +49,7 @@ def categoryview(request,cats):
         return render (request,'blogs/blog_catView.html',context)
 
 def test(request):
-    form=EditblogForm
-    return render(request,'blogs/hh.html',context={'form':form})
+    form=2
+    return render(request,'test/test.html',context={'form':form})
 
 
-#<div class="col-md-4">
-       # <h4><label for="id_author" class="form-label text-warning">Author</label></h4>
-       # {{form.author}}
-      #</div> 

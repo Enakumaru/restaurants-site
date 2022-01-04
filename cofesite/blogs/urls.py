@@ -9,5 +9,7 @@ urlpatterns = [
     path('P-blog/edit/<str:pk>/',P_updateblog.as_view(),name='P_updateblog'),
     path('P-blog/delete/<str:pk>/',deleteblog.as_view(),name='deleteblog'),
     path('blogcategory/<str:cats>/', categoryview, name='blogcategory'),
-    path('hh/',test,name='hh')
+    path('hh/',test,name='hh'),
+    #path('comment/add',addcomments.as_view(),name='addComment'),
+    
 ]

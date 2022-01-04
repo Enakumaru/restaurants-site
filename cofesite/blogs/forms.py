@@ -1,6 +1,6 @@
 from django import forms
 from django.db.models.base import Model
-from django.forms import widgets
+from django.forms import widgets 
 from core.models import blog
 from django.http import request
 class blogForm(forms.ModelForm):
@@ -30,3 +30,5 @@ class EditblogForm(forms.ModelForm):
             'category': forms.Select(attrs={'class':'form-select','aria-label':"Default select example",}),
             'snippet': forms.TextInput(attrs={'placeholder':'Add Snippet here','class':'form-control',}),
         }
+
+
