@@ -26,10 +26,38 @@ class profileView(DetailView):
     model=Customer
     template_name='profile/profile.html'
     
+    
     def get_context_data(self, **kwargs):
         context = super(profileView,self).get_context_data(**kwargs)
         page_user=get_object_or_404(Customer,id=self.kwargs['pk'])
+        order_id=Order.objects.filter(customer_id=self.kwargs['pk']).values_list('id', flat=True)
+        l=[]
+        for i in order_id:
+            
+            orderitem=OrderItem.objects.filter(order_id=i)
+            l.append(orderitem)
+        for i in l:
+            print(i.values())
         context["page_user"] = page_user 
+        context["orderitem"] = l[::-1]
+        return context
+    #, flat=True
+    
+    
+class orderHistory(DetailView):
+    model=Order
+    template_name='profile/orderHistory.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super(orderHistory,self).get_context_data(**kwargs)
+        order_id=Order.objects.filter(customer_id=self.kwargs['pk']).values_list('id', flat=True)
+        l=[]
+        for i in order_id:
+            orderitem=OrderItem.objects.filter(order_id=i)
+            l.append(orderitem)
+        for i in l:
+            print(i.values())
+        context["orderitem"] = l[::-1]
         return context
     
 class edit_userSetting(UpdateView):

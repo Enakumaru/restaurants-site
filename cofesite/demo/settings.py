@@ -1,5 +1,7 @@
 import os
-
+import  dj_database_url
+import django_heroku
+from decouple import config 
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 DEBUG = True
@@ -38,7 +40,8 @@ MIDDLEWARE = [
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware'
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
 
 ROOT_URLCONF = 'demo.urls'
@@ -110,6 +113,8 @@ SITE_ID = 1
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
 ACCOUNT_EMAIL_VERIFICATION = 'none'
-
+STATICFILES_STORAGE='whitenoise.storage.CompressedManifestStaticFileStorage '
 #LOGIN_REDIRECT_URL = {% url 'account:dashboard' %}
 #LOGIN_REDIRECT_URL = '/'
+
+django_heroku.settings(locals())

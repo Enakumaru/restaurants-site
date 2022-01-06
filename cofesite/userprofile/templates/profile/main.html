@@ -46,6 +46,7 @@
                   {% endif %}
                   {% if user.is_authenticated %}
                   <li class="nav-item cart"><a href="/profile/{{user.id}}" class="nav-link"><span class="icon icon-person"></span></a></li>
+                  <li class="nav-item "><a href="{% url 'profile:orderhistory' user.id %}" class="nav-link">Order History</a></li>
                   <li class="nav-item "><a href="/accounts/logout/" class="nav-link">Log out</a></li> 
                   {% else %}
                   <li class="nav-item "><a href="/accounts/login/" class="nav-link">Log in</a></li>
