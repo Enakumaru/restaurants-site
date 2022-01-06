@@ -1,8 +1,4 @@
 asgiref==3.4.1
-<<<<<<< HEAD
-backports.zoneinfo==0.2.1
-=======
->>>>>>> 8dbe554e165b747052b1cad26d50ca8ed44bd3a0
 bleach==4.1.0
 certifi==2021.10.8
 cffi==1.15.0
