@@ -47,6 +47,12 @@
           </div> 
           <br><br>
           <div class="col-12">
+            <a href="{% url 'profile:edit' %}">
+            <button type="submit"  class="btn btn-warning py-3 px-4 ">
+                Total edit
+            </button></a>
+          </div>
+          <div class="col-12">
             <a href="{% url 'account_change_password' %}">
             <button type="submit"  class="btn btn-warning py-3 px-4 ">
                 change password

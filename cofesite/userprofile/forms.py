@@ -51,9 +51,10 @@ class costomersdedatil(forms.ModelForm):
     #name = forms.CharField(label='firstname',widget=forms.TextInput(attrs={'class':'form-control','id':'name','label':'firstname'}))
     #email = forms.CharField(label='email',widget=forms.TextInput(attrs={'class':'form-control','id':'email'}))
     profile_image=forms.ImageField(label='profile',widget=forms.FileInput(attrs={'class':'form-control','type':'file',}),)
+    bio=forms.CharField(widget=forms.Textarea(attrs={'class':'form-control','placeholder':'Add body'})),
     class Meta:
         model=Customer
-        fields = ('profile_image',)   
+        fields = ('profile_image','bio')   
 
 
     

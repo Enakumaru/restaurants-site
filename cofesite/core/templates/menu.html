@@ -104,8 +104,8 @@
 	        				<h3><span>{{  i.title }}</span></h3>
 	        				<span class="price">${{ i.price }}</span>
 	        			</div>
-	        			<div class="d-block">
-	        				<p>{{  product.description }}</p>
+	        			<div class="d-block">{{ variable|truncatechars:255 }}
+	        				<p>{{  product.description|truncatechars:50 }}</p>
 	        			</div>
         			</div>
         		</div>
@@ -123,7 +123,7 @@
 	        				<span class="price">${{ product.price }}</span>
 	        			</div>
 	        			<div class="d-block">
-	        				<p>{{  product.description }}</p>
+	        				<p>{{  product.description|truncatechars:50  }}</p>
 	        			</div>
 	        		</div>
         		</div>
@@ -142,7 +142,7 @@
 	        				<span class="price">${{ product.price }}</span>
 	        			</div>
 	        			<div class="d-block">
-	        				<p>{{  product.description }}</p>
+	        				<p>{{  product.description|truncatechars:50  }}</p>
 	        			</div>
         			</div>
         		</div>
@@ -160,7 +160,7 @@
 	        				<span class="price">${{ product.price }}</span>
 	        			</div>
 	        			<div class="d-block">
-	        				<p>{{  product.description }}</p>
+	        				<p>{{  product.description|truncatechars:50  }}</p>
 	        			</div>
 	        		</div>
         		</div>
@@ -203,7 +203,7 @@
 		              				<a href="/product-single/{{product.id}}" class="menu-img img mb-4" style="background-image: url('{{product.imageURL}}');"></a>
 		              				<div class="text">
 		              					<h3><a href="/product-single/{{product.id}}">{{  product.title }}</a></h3>
-		              					<p>{{  product.description }}</p>
+		              					<p>{{  product.description|truncatechars:50 }}</p>
 		              					<p class="price"><span>${{ product.price }}</span></p>
 		              					<p><a href="#" data-product={{product.id}} data-categorie={{product.category.id}} data-action="add" data-quntity=1 class="btn btn-primary btn-outline-primary update-cart ">Add to cart</a></p>
 		              				</div>
@@ -221,7 +221,7 @@
 		              				<a href="/product-single/{{product.id}}" class="menu-img img mb-4" style="background-image: url('{{product.imageURL}}');"></a>
 		              				<div class="text">
 		              					<h3><a href="/product-single/{{product.id}}">{{  product.title }}</a></h3>
-		              					<p>{{  product.description }}</p>
+		              					<p>{{  product.description|truncatechars:50 }}</p>
 		              					<p class="price"><span>${{ product.price }}</span></p>
 		              					<p><a href="#" data-product={{product.id}} data-categorie={{product.category.id}} data-action="add" data-quntity=1 class="btn btn-primary btn-outline-primary update-cart ">Add to cart</a></p>
 		              				</div>
@@ -240,7 +240,7 @@
 		              				<a href="/product-single/{{product.id}}" class="menu-img img mb-4" style="background-image: url('{{product.imageURL}}');"></a>
 		              				<div class="text">
 		              					<h3><a href="/product-single/{{product.id}}">{{  product.title }}</a></h3>
-		              					<p>{{  product.description }}</p>
+		              					<p>{{  product.description|truncatechars:50 }}</p>
 		              					<p class="price"><span>${{ product.price }}</span></p>
 		              					<p><a href="#" data-product={{product.id}} data-categorie={{product.category.id}} data-action="add" data-quntity=1 class="btn btn-primary btn-outline-primary update-cart ">Add to cart</a></p>
 		              				</div>

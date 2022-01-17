@@ -9,6 +9,6 @@ urlpatterns = [
     path('<int:pk>',profileView.as_view(),name='profileview'),
     path('orderHistory/<int:pk>',orderHistory.as_view(),name='orderhistory'),
     
-    path('', tet.as_view(), name='test2'),
+    path('edit', tet.as_view(), name='edit'),
     
 ]
