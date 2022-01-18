@@ -1,7 +1,7 @@
 import os
 import  dj_database_url
 import django_heroku
-
+import psycopg2
 ENVIRONMENT = os.getenv('ENVIRONMENT', 'development')
 
 DEBUG = True
@@ -88,10 +88,16 @@ ACCOUNT_FORMS = {'signup': 'userprofile.forms.MyCustomSignupForm'}
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, 'db.sqlite3')
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test_1',
+        'USER': 'postgres',
+        'PASSWORD': 'hariharan',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
+
+DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True)
 
 if ENVIRONMENT == 'production':
     DEBUG = False
