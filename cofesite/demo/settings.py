@@ -86,13 +86,17 @@ ACCOUNT_ADAPTER = 'userprofile.views.MyAccountAdapter'
 ACCOUNT_FORMS = {'signup': 'userprofile.forms.MyCustomSignupForm'}
 
 
+
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": os.path.join(BASE_DIR, 'db.sqlite3')
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'test_1',
+        'USER': 'postgres',
+        'PASSWORD': 'hariharan',
+        'HOST': 'localhost',
+        'PORT': '5432',
     }
 }
-
 if ENVIRONMENT == 'production':
     DEBUG = False
     SECRET_KEY = os.getenv('SECRET_KEY')
